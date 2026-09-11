@@ -213,7 +213,7 @@
         <div class="yuz on">
           <div class="on-ust">
             <div class="muhur" aria-hidden="true">A</div>
-            <span class="etiket">abdioglu.com</span>
+            <span class="etiket" lang="en">abdioglu.com</span>
           </div>
           <h1 class="isim"><span>Ahmet Haktan</span>Abdioğlu</h1>
           <p class="unvan">İletişim · Misafir İlişkileri · İlahiyat</p>
@@ -238,7 +238,7 @@
   </section>
 
   <nav class="eylemler" aria-label="Hızlı iletişim">
-    <a class="btn btn-ana" id="rehber" href="ahmet-haktan-abdioglu.vcf" download="Ahmet-Haktan-Abdioglu.vcf">
+    <a class="btn btn-ana" id="rehber" href="ahmet-haktan-abdioglu.vcf">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M19 8v6M16 11h6"/></svg>
       Rehbere ekle
     </a>
@@ -318,7 +318,7 @@
   Array.prototype.forEach.call(document.querySelectorAll('[data-kopyala]'),function(el){
     el.addEventListener('click',function(){
       var ad=el.getAttribute('data-kopyala'), ok=function(){goster('@'+ad+' kopyalandı · WhatsApp\'ta arayın')}, hata=function(){goster('WhatsApp\'ta @'+ad+' kullanıcı adını arayın')};
-      try{ navigator.clipboard.writeText(ad).then(ok,hata); }catch(e){ hata(); }
+      try{ navigator.clipboard.writeText('@'+ad).then(ok,hata); }catch(e){ hata(); }
     });
   });
 
