@@ -1,0 +1,16 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Abdioğlu;Ahmet Haktan;;;
+FN:Ahmet Haktan Abdioğlu
+NICKNAME:ahmetabdiogl
+EMAIL;TYPE=INTERNET,WORK,PREF:info@ahmetabdiogl.com
+item1.EMAIL;TYPE=INTERNET:ahmethaktanabdioglu@aof.anadolu.edu.tr
+item1.X-ABLabel:Akademik
+X-SOCIALPROFILE;TYPE=whatsapp:ahmetabdiogl
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/ahmetabdiogl/
+item2.URL:https://www.linkedin.com/in/ahmetabdiogl/
+item2.X-ABLabel:LinkedIn
+URL:https://abdioglu.com
+ADR;TYPE=HOME:;;Melikgazi;Kayseri;;;Türkiye
+NOTE:via WhatsApp: @ahmetabdiogl
+END:VCARD

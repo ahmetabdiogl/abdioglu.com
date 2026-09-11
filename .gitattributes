@@ -1,0 +1,2 @@
+# vCard standardı CRLF satır sonu ister; git dönüştürmesin.
+*.vcf -text

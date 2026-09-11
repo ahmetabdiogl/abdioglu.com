@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Abdioğlu Kartvizit</title>
+<meta name="description" content="Ahmet Haktan Abdioğlu — İletişim, misafir ilişkileri ve ilahiyat. Kayseri, Türkiye.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Tek görünüm: lacivert zemin. Palet, kişisel stil sisteminden türetildi:
+     lacivert = güç rengi, bordo = imza vurgu, gümüş = metal, sıcak nötr = metin. */
+  :root{
+    --lacivert-derin:#0B1426;
+    --lacivert:#132140;
+    --lacivert-acik:#1C2D52;
+    --bordo:#7C2335;
+    --bordo-acik:#9A3246;
+    --gumus:#AEB5C0;
+    --gumus-soluk:#6F7A8C;
+    --fildisi:#EFEBE4;
+    --cizgi:rgba(174,181,192,.22);
+    --display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+    --govde:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
+    --mono:"IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--lacivert-derin)}
+  body{
+    margin:0;min-height:100vh;
+    background:
+      radial-gradient(120% 60% at 50% -10%, var(--lacivert-acik) 0%, transparent 60%),
+      var(--lacivert-derin);
+    color:var(--fildisi);
+    font:400 16px/1.55 var(--govde);
+    padding-inline:20px;padding-block:40px 32px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sayfa{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+
+  /* ---------- Kart (85×55 mm oranı) ---------- */
+  .sahne{perspective:1400px}
+  .kart{
+    position:relative;width:100%;aspect-ratio:85/55;max-width:100%;
+    transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  .kart.cevrik{transform:rotateY(180deg)}
+  .yuz{
+    position:absolute;inset:0;border-radius:14px;overflow:hidden;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    background:linear-gradient(155deg,var(--lacivert-acik) 0%,var(--lacivert) 55%,#101B35 100%);
+    border:1px solid var(--cizgi);
+    box-shadow:0 24px 50px -20px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.06);
+    padding:7% 7.5%;
+    display:flex;flex-direction:column;
+  }
+  /* terzi dikişi: kartın içinde kesikli iç hat */
+  .yuz::after{
+    content:"";position:absolute;inset:9px;border-radius:9px;
+    border:1px dashed rgba(174,181,192,.16);pointer-events:none;
+  }
+  .on-ust{display:flex;justify-content:space-between;align-items:flex-start}
+  .muhur{
+    width:44px;height:44px;border-radius:50%;
+    background:var(--bordo);color:var(--fildisi);
+    display:grid;place-items:center;
+    font:600 22px/1 var(--display);
+    box-shadow:0 0 0 3px var(--lacivert), 0 0 0 4px rgba(174,181,192,.45);
+  }
+  .etiket{
+    font:500 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--gumus);
+  }
+  .isim{
+    margin:auto 0 0;
+    font:500 clamp(26px,7.4vw,34px)/1.02 var(--display);
+    letter-spacing:-.01em;text-wrap:balance;
+  }
+  .isim span{display:block;color:var(--gumus);font-size:.62em;letter-spacing:.02em;margin-bottom:4px}
+  .unvan{margin:10px 0 0;font:500 13px/1.3 var(--govde);color:var(--gumus);letter-spacing:.01em}
+  .on-alt{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:12px;
+    margin-top:14px;padding-top:10px;border-top:1px solid var(--cizgi);
+    font:400 11px/1.2 var(--mono);color:var(--gumus);font-variant-numeric:tabular-nums;
+  }
+  .on-alt b{color:var(--fildisi);font-weight:500}
+
+  .arka{transform:rotateY(180deg);flex-direction:row;align-items:center;gap:7%}
+  .qr{
+    flex:0 0 auto;height:78%;aspect-ratio:1;border-radius:8px;
+    background:var(--fildisi);color:var(--lacivert-derin);padding:6px;
+    display:grid;place-items:center;
+  }
+  .qr svg,.qr canvas{width:100%;height:100%;display:block}
+  .qr-yedek{font:500 10px/1.3 var(--mono);text-align:center}
+  .arka-metin{display:flex;flex-direction:column;gap:8px;min-width:0}
+  .arka-metin strong{font:500 clamp(18px,5vw,22px)/1.1 var(--display)}
+  .arka-metin p{margin:0;font-size:12.5px;line-height:1.45;color:var(--gumus)}
+  .arka-metin code{font:500 12px var(--mono);color:var(--fildisi)}
+
+  .cevir{
+    align-self:center;margin-top:14px;
+    background:none;border:0;color:var(--gumus);cursor:pointer;
+    font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+    padding:8px 10px;border-radius:6px;display:inline-flex;align-items:center;gap:8px;
+  }
+  .cevir:hover{color:var(--fildisi)}
+  .kart-blok{display:flex;flex-direction:column}
+
+  /* ---------- Eylemler ---------- */
+  .eylemler{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    min-height:50px;border-radius:10px;text-decoration:none;
+    font:600 14.5px/1 var(--govde);letter-spacing:.01em;
+    transition:background .2s, border-color .2s, transform .15s;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-ana{background:var(--bordo);color:var(--fildisi);border:1px solid var(--bordo-acik)}
+  .btn-ana:hover{background:var(--bordo-acik)}
+  .btn-ikincil{color:var(--fildisi);border:1px solid rgba(174,181,192,.4);background:rgba(255,255,255,.02)}
+  .btn-ikincil:hover{border-color:var(--gumus);background:rgba(255,255,255,.05)}
+  .btn svg{width:17px;height:17px;flex:none}
+
+  /* ---------- Bölümler ---------- */
+  .bolum h2{
+    margin:0 0 12px;font:500 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gumus-soluk);
+    display:flex;align-items:center;gap:12px;
+  }
+  .bolum h2::after{content:"";flex:1;height:1px;background:var(--cizgi)}
+  .hakkinda p{margin:0;font-size:15.5px;line-height:1.65;color:#D9D6D0;max-width:62ch}
+  .hakkinda p + p{margin-top:10px}
+  .alanlar{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding:0;list-style:none}
+  .alanlar li{
+    font:500 12.5px/1 var(--govde);color:var(--fildisi);
+    padding:8px 12px;border-radius:999px;border:1px solid var(--cizgi);
+  }
+
+  .baglantilar{list-style:none;margin:0;padding:0;border-top:1px solid var(--cizgi)}
+  .baglantilar a{
+    display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:14px;
+    padding:15px 4px;border-bottom:1px solid var(--cizgi);
+    color:var(--fildisi);text-decoration:none;
+  }
+  .baglantilar a:hover .ok{transform:translateX(3px);color:var(--fildisi)}
+  .baglantilar a:hover .ad{color:#fff}
+  .baglantilar svg.logo{width:20px;height:20px;color:var(--gumus)}
+  .ad{font:500 15px/1.2 var(--govde)}
+  .kulp{display:block;overflow-wrap:break-word;font:400 12px/1.3 var(--mono);color:var(--gumus-soluk);margin-top:3px}
+  .ok{color:var(--gumus-soluk);transition:transform .2s,color .2s;font:400 16px/1 var(--mono)}
+
+  footer{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+    padding-top:16px;border-top:1px solid var(--cizgi);
+    font:400 11px/1.4 var(--mono);color:var(--gumus-soluk);letter-spacing:.04em;
+  }
+
+  a:focus-visible,button:focus-visible{outline:2px solid var(--gumus);outline-offset:3px}
+  .taslak-eski{
+    align-self:center;font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gumus);border:1px dashed rgba(174,181,192,.4);border-radius:999px;padding:7px 12px;
+  }
+  @media (prefers-reduced-motion:reduce){ .kart{transition:none} .btn,.ok{transition:none} }
+  @media (max-width:380px){ .eylemler{grid-template-columns:1fr} .unvan{font-size:12px} }
+
+  /* ---------- v1 ekleri ---------- */
+  .durum{
+    align-self:center;display:inline-flex;align-items:center;gap:9px;
+    font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gumus);
+  }
+  .durum i{width:7px;height:7px;border-radius:50%;background:#6FA58A;box-shadow:0 0 0 3px rgba(111,165,138,.18)}
+  .ilkeler{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+  .ilkeler li{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:baseline}
+  .ilkeler b{font:500 19px/1.2 var(--display);color:var(--fildisi);white-space:nowrap}
+  .ilkeler span{font-size:14px;line-height:1.5;color:var(--gumus)}
+  @media (max-width:420px){ .ilkeler li{grid-template-columns:1fr;row-gap:2px} }
+  .kunye{margin:0;display:grid;grid-template-columns:92px 1fr;border-top:1px solid var(--cizgi)}
+  .kunye dt,.kunye dd{padding:12px 0;border-bottom:1px solid var(--cizgi);margin:0}
+  .kunye dt{font:500 10.5px/1.7 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gumus-soluk)}
+  .kunye dd{font-size:14.5px;line-height:1.5;color:var(--fildisi)}
+  .kunye dd small{display:block;font:400 12px/1.5 var(--mono);color:var(--gumus-soluk);font-variant-numeric:tabular-nums}
+  .kunye dd small + span{display:block;margin-top:8px}
+  .motto{margin:0;font:italic 500 13px/1.4 var(--display);color:var(--fildisi)}
+  .motto-tr{margin:0;font-size:12px;line-height:1.45;color:var(--gumus)}
+
+  .baglantilar .satir{
+    width:100%;background:none;border:0;border-bottom:1px solid var(--cizgi);cursor:pointer;text-align:left;
+    display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:14px;
+    padding:15px 4px;color:var(--fildisi);font:inherit;
+  }
+  .baglantilar .satir:hover .ad{color:#fff}
+  .baglantilar .satir:hover .ok{color:var(--fildisi)}
+  button.btn{cursor:pointer;font:600 14.5px/1 var(--govde)}
+  .bildirim{
+    position:fixed;left:50%;bottom:24px;transform:translate(-50%,12px);opacity:0;pointer-events:none;
+    background:var(--fildisi);color:var(--lacivert-derin);border-radius:999px;padding:11px 18px;
+    font:500 13px/1.3 var(--govde);box-shadow:0 12px 30px -10px rgba(0,0,0,.6);
+    transition:opacity .25s,transform .25s;max-width:calc(100% - 32px);text-align:center;
+  }
+  .bildirim.acik{opacity:1;transform:translate(-50%,0)}
+  @media (prefers-reduced-motion:reduce){ .bildirim{transition:none} }
+</style>
+</head>
+<body>
+
+<main class="sayfa">
+  <span class="durum"><i aria-hidden="true"></i>Yeni iş birliklerine açık</span>
+
+  <section class="kart-blok" aria-label="Kartvizit">
+    <div class="sahne">
+      <div class="kart" id="kart">
+        <div class="yuz on">
+          <div class="on-ust">
+            <div class="muhur" aria-hidden="true">A</div>
+            <span class="etiket">abdioglu.com</span>
+          </div>
+          <h1 class="isim"><span>Ahmet Haktan</span>Abdioğlu</h1>
+          <p class="unvan">İletişim · Misafir İlişkileri · İlahiyat</p>
+          <div class="on-alt">
+            <span><b>Kayseri</b>, Türkiye</span>
+            <span>Kuruluş 2026</span>
+          </div>
+        </div>
+        <div class="yuz arka" aria-hidden="true">
+          <div class="qr" id="qr"><span class="qr-yedek">abdioglu<br>.com</span></div>
+          <div class="arka-metin">
+            <p class="motto">Nullum verum pulchrum absque parvis doloribus nascitur.</p>
+            <p class="motto-tr">Hiçbir gerçek güzellik, küçük acılar olmadan doğmaz.</p>
+            <code>abdioglu.com</code>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="cevir" id="cevir" type="button" aria-controls="kart" aria-pressed="false">
+      <span aria-hidden="true">↻</span> <span id="cevirMetin">Kartı çevir · QR</span>
+    </button>
+  </section>
+
+  <nav class="eylemler" aria-label="Hızlı iletişim">
+    <a class="btn btn-ana" id="rehber" href="ahmet-haktan-abdioglu.vcf" download="Ahmet-Haktan-Abdioglu.vcf">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M19 8v6M16 11h6"/></svg>
+      Rehbere ekle
+    </a>
+    <button class="btn btn-ikincil" type="button" data-kopyala="ahmetabdiogl" aria-describedby="bildirim">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"/><path d="M9 9.2c.2 2.6 2.2 4.6 4.8 4.9l1-1.1 1.7.8"/></svg>
+      WhatsApp
+    </button>
+  </nav>
+
+  <section class="bolum hakkinda" aria-labelledby="h-hakkinda">
+    <h2 id="h-hakkinda">Hakkında</h2>
+    <p>Kayseri'de doğdum, burada yaşıyorum. Misafirperverlik, gayrimenkul ve marka iletişimi alanlarında çalıştım; her birinde işin özünü aynı buldum: insanı doğru karşılamak, dinlemek ve güven inşa etmek.</p>
+    <p>2026 itibarıyla Anadolu Üniversitesi'nde İlahiyat eğitimine başladım. Öğrenmeyi, üretmeyi ve girişimciliği tek bir yolda birleştiren bir düzen kuruyorum; bu sayfa o yolun ilk durağı.</p>
+  </section>
+
+  <section class="bolum" aria-labelledby="h-ilke">
+    <h2 id="h-ilke">İlkeler</h2>
+    <ul class="ilkeler">
+      <li><b>İnsan onuru</b><span>Her karşılaşmanın merkezinde karşımdaki insan ve onun sınırları var.</span></li>
+      <li><b>Merak</b><span>Sormak, okumak, anlamak; öğrenmeyi hiçbir aşamada bırakmamak.</span></li>
+      <li><b>Girişkenlik</b><span>Bir fikri bekletmek yerine ilk adımı atmak.</span></li>
+    </ul>
+  </section>
+
+  <section class="bolum" aria-labelledby="h-kunye">
+    <h2 id="h-kunye">Künye</h2>
+    <dl class="kunye">
+      <dt>Konum</dt><dd>Melikgazi, Kayseri</dd>
+      <dt>Eğitim</dt><dd>İlahiyat Önlisans<small>Anadolu Üniversitesi AÖF · 2026–2028</small></dd>
+      <dt>Deneyim</dt><dd>Kurucu · satın alma, proje ve marka yönetimi<small>ahmetabdiogl · 2023–bugün</small><span>Ön büro ve misafir ilişkileri</span><small>A Royal Suit · 2024–2026</small><span>Marka yönetimi</span><small>Regata Plus · 2023–2024</small></dd>
+      <dt>Diller</dt><dd>Türkçe<small>ana dil</small><span>İngilizce</span><small>sınırlı çalışma yetkinliği</small></dd>
+    </dl>
+  </section>
+
+  <section class="bolum" aria-labelledby="h-bag">
+    <h2 id="h-bag">İletişim</h2>
+    <ul class="baglantilar">
+      <li><button type="button" class="satir" data-kopyala="ahmetabdiogl" aria-describedby="bildirim">
+        <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"/><path d="M9 9.2c.2 2.6 2.2 4.6 4.8 4.9l1-1.1 1.7.8"/></svg>
+        <span><span class="ad">WhatsApp</span><span class="kulp">@ahmetabdiogl · kullanıcı adıyla arayın</span></span><span class="ok" aria-hidden="true">⧉</span></button></li>
+      <li><a href="mailto:info@ahmetabdiogl.com">
+        <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>
+        <span><span class="ad">İş ve iş birlikleri</span><span class="kulp">info@ahmetabdiogl.com</span></span><span class="ok" aria-hidden="true">→</span></a></li>
+      <li><a href="mailto:ahmethaktanabdioglu@aof.anadolu.edu.tr">
+        <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c1.5 1.5 3.4 2.2 5.5 2.2s4-.7 5.5-2.2V11"/><path d="M21.5 9v5"/></svg>
+        <span><span class="ad">Akademik</span><span class="kulp">ahmethaktanabdioglu@<wbr>aof.anadolu.edu.tr</span></span><span class="ok" aria-hidden="true">→</span></a></li>
+      <li><a href="https://www.linkedin.com/in/ahmetabdiogl/" rel="me noopener" target="_blank">
+        <svg class="logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-4.9c0-1.17-.02-2.68-1.63-2.68-1.64 0-1.89 1.28-1.89 2.6V21h-4z"/></svg>
+        <span><span class="ad">LinkedIn</span><span class="kulp">in/ahmetabdiogl</span></span><span class="ok" aria-hidden="true">→</span></a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>© 2026 Ahmet Haktan Abdioğlu</span>
+    <span>abdioglu.com · Kuruluş 11.09.2026</span>
+  </footer>
+</main>
+<div class="bildirim" id="bildirim" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(function(){
+  // Kart çevirme
+  var kart=document.getElementById('kart'), btn=document.getElementById('cevir'), metin=document.getElementById('cevirMetin');
+  var on=kart.querySelector('.on'), arka=kart.querySelector('.arka');
+  btn.addEventListener('click',function(){
+    var c=kart.classList.toggle('cevrik');
+    btn.setAttribute('aria-pressed',c);
+    metin.textContent=c?'Ön yüze dön':'Kartı çevir · QR';
+    on.setAttribute('aria-hidden',c); arka.setAttribute('aria-hidden',!c);
+  });
+
+
+  // WhatsApp: numara paylaşmadan, kullanıcı adını kopyala
+  var bildirim=document.getElementById('bildirim'), zaman;
+  function goster(m){ bildirim.textContent=m; bildirim.classList.add('acik'); clearTimeout(zaman); zaman=setTimeout(function(){bildirim.classList.remove('acik')},2600); }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-kopyala]'),function(el){
+    el.addEventListener('click',function(){
+      var ad=el.getAttribute('data-kopyala'), ok=function(){goster('@'+ad+' kopyalandı · WhatsApp\'ta arayın')}, hata=function(){goster('WhatsApp\'ta @'+ad+' kullanıcı adını arayın')};
+      try{ navigator.clipboard.writeText(ad).then(ok,hata); }catch(e){ hata(); }
+    });
+  });
+
+  // QR (abdioglu.com)
+  try{
+    if(window.qrcode){
+      var q=qrcode(0,'M'); q.addData('https://abdioglu.com'); q.make();
+      var n=q.getModuleCount(), d='';
+      for(var y=0;y<n;y++)for(var x=0;x<n;x++) if(q.isDark(y,x)) d+='M'+x+' '+y+'h1v1h-1z';
+      document.getElementById('qr').innerHTML='<svg viewBox="0 0 '+n+' '+n+'" shape-rendering="crispEdges" role="img" aria-label="abdioglu.com QR kodu"><path fill="currentColor" d="'+d+'"/></svg>';
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
