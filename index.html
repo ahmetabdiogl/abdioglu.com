@@ -80,12 +80,13 @@
   }
   .on-ust{display:flex;justify-content:space-between;align-items:flex-start}
   .muhur{
-    width:44px;height:44px;border-radius:50%;
+    width:48px;height:48px;border-radius:50%;overflow:hidden;
     background:var(--bordo);color:var(--fildisi);
     display:grid;place-items:center;
     font:600 22px/1 var(--display);
     box-shadow:0 0 0 3px var(--lacivert), 0 0 0 4px rgba(174,181,192,.45);
   }
+  .muhur img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
   .etiket{
     font:500 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--gumus);
   }
@@ -229,7 +230,7 @@
       <div class="kart" id="kart">
         <div class="yuz on">
           <div class="on-ust">
-            <div class="muhur" aria-hidden="true">A</div>
+            <div class="muhur" aria-hidden="true"><img src="foto.jpg" alt="" width="48" height="48"></div>
             <span class="etiket" lang="en">abdioglu.com</span>
           </div>
           <h1 class="isim"><span>Ahmet Haktan</span>Abdioğlu</h1>
